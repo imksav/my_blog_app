@@ -23,6 +23,7 @@ class _HomeScreenState extends State<HomeScreen> {
     _refreshBlogs();
   }
 
+// this function  will refresh the list of blogs and update to the screen
   Future<void> _refreshBlogs() async {
     setState(() {
       _blogsFuture = DatabaseHelper.instance.getAllBlogs();
@@ -31,12 +32,14 @@ class _HomeScreenState extends State<HomeScreen> {
     });
   }
 
+// this function is used to search the blog details in an app
   Future<void> _searchBlogs(String query) async {
     setState(() {
       _blogsFuture = DatabaseHelper.instance.searchBlogs(query);
     });
   }
 
+// this is to make a group of selection for group delete
   void _toggleSelect(Blog blog) {
     setState(() {
       if (_selectedBlogs.contains(blog)) {
@@ -47,10 +50,12 @@ class _HomeScreenState extends State<HomeScreen> {
     });
   }
 
+// thi function will delete the selected blogs using the toogle select function
   void _deleteSelectedBlogs() async {
     for (Blog blog in _selectedBlogs) {
       await DatabaseHelper.instance.deleteBlog(blog.id!);
     }
+    // after deletion of the application, it will refresh the list of blogs and update to the screen
     _refreshBlogs();
   }
 
@@ -101,7 +106,10 @@ class _HomeScreenState extends State<HomeScreen> {
         future: _blogsFuture,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(child: CircularProgressIndicator());
+            return Center(
+              // it will show the circular progress gif in home screen when data being fetched from the database
+              child: CircularProgressIndicator(),
+            );
           }
           if (snapshot.hasError) {
             return Center(child: Text('Error: ${snapshot.error}'));
@@ -111,16 +119,19 @@ class _HomeScreenState extends State<HomeScreen> {
             itemCount: _blogs.length,
             itemBuilder: (context, index) {
               Blog blog = _blogs[index];
+              // after getting the data from the database it will be passed to the create an widget to display
               return _buildBlogTile(blog);
             },
           );
         },
       ),
+      // this button is used to add post
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Navigator.push(
             context,
             MaterialPageRoute(
+              // navigation to the blog adding screen
               builder: (context) => AddBlogScreen(),
             ),
           ).then((_) => _refreshBlogs());
@@ -153,6 +164,7 @@ class _HomeScreenState extends State<HomeScreen> {
           Navigator.push(
             context,
             MaterialPageRoute(
+              // once we click on any blog item, it will navigate to the detail screen of that blog item
               builder: (context) => BlogDetailScreen(blog: blog),
             ),
           ).then((_) => _refreshBlogs());
@@ -162,10 +174,12 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 }
 
+// this is the class for the search function
 class BlogSearchDelegate extends SearchDelegate<String> {
   @override
   List<Widget> buildActions(BuildContext context) {
     return [
+      // at the beginning it will be blank as we don't apply any sql
       IconButton(
         icon: Icon(Icons.clear),
         onPressed: () {
@@ -199,7 +213,7 @@ class BlogSearchDelegate extends SearchDelegate<String> {
         }
 
         List<Blog> searchResults = snapshot.data ?? [];
-
+// list of data search will be displayed after clicking on search button
         return ListView.builder(
           itemCount: searchResults.length,
           itemBuilder: (context, index) {

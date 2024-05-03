@@ -25,6 +25,7 @@ class _EditBlogScreenState extends State<EditBlogScreen> {
   @override
   void initState() {
     super.initState();
+    // all previously added data will be assigned initally
     _titleController.text = widget.blog.title;
     _descriptionController.text = widget.blog.description;
     _authorController.text = widget.blog.author;
@@ -146,6 +147,7 @@ class _EditBlogScreenState extends State<EditBlogScreen> {
     );
   }
 
+// saves the changes in the field and assign them to the variable
   void _saveBlog() async {
     final String title = _titleController.text;
     final String description = _descriptionController.text;
@@ -153,6 +155,7 @@ class _EditBlogScreenState extends State<EditBlogScreen> {
     final String date = _dateController.text;
     final String tags = _tagsController.text;
 
+// check validation
     if (title.isEmpty ||
         description.isEmpty ||
         author.isEmpty ||

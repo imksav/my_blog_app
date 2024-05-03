@@ -19,24 +19,26 @@ class _AddBlogScreenState extends State<AddBlogScreen> {
   final TextEditingController _tagsController = TextEditingController();
   File? _imageFile;
   final picker = ImagePicker();
-  DateTime? _selectedDate;
+  // DateTime? _selectedDate;
 
-  Future<void> _selectDate(BuildContext context) async {
-    final DateTime? pickedDate = await showDatePicker(
-      context: context,
-      initialDate: DateTime.now(),
-      firstDate: DateTime(2021),
-      lastDate: DateTime(2100),
-    );
+  // Future<void> _selectDate(BuildContext context) async {
+  //   final DateTime? pickedDate = await showDatePicker(
+  //     context: context,
+  //     initialDate: DateTime.now(),
+  //     firstDate: DateTime(2021),
+  //     lastDate: DateTime(2100),
+  //   );
 
-    if (pickedDate != null) {
-      setState(() {
-        _selectedDate = pickedDate;
-        _dateController.text = DateFormat('yyyy-MM-dd').format(_selectedDate!);
-      });
-    }
-  }
+  //   if (pickedDate != null) {
+  //     setState(() {
+  //       _selectedDate = pickedDate;
+  //       _dateController.text = DateFormat('yyyy-MM-dd').format(_selectedDate!);
+  //     });
+  //   }
+  // }
 
+// this function is used to select the image from the different source
+// if we select as given option that will be the source value in this function
   Future getImage(ImageSource source) async {
     final pickedFile = await picker.getImage(source: source);
 
@@ -49,6 +51,7 @@ class _AddBlogScreenState extends State<AddBlogScreen> {
     });
   }
 
+// this function is called after completing all the field filled to save the blog into database
   Future<void> _saveBlog() async {
     final String title = _titleController.text;
     final String description = _descriptionController.text;
@@ -56,6 +59,7 @@ class _AddBlogScreenState extends State<AddBlogScreen> {
     final String date = _dateController.text;
     final String tags = _tagsController.text;
 
+// to check validation
     if (title.isEmpty ||
         description.isEmpty ||
         author.isEmpty ||
@@ -70,6 +74,8 @@ class _AddBlogScreenState extends State<AddBlogScreen> {
       description: description,
       author: author,
       date: date,
+      // split function will separte the entry if comma is in between
+      // tags field store the list of data
       tags: tags.split(','),
       imagePath: imagePath,
     );
@@ -139,6 +145,8 @@ class _AddBlogScreenState extends State<AddBlogScreen> {
                 textInputAction: TextInputAction.next,
               ),
               SizedBox(height: 12.0),
+
+// this is used to select the date and time in which we can select the date range from 2015 to 2101
               TextField(
                 controller: _dateController,
                 decoration: InputDecoration(labelText: 'Date'),

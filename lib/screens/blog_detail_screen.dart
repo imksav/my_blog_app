@@ -9,6 +9,8 @@ class BlogDetailScreen extends StatelessWidget {
   final Blog blog;
 
   BlogDetailScreen({required this.blog});
+
+  // this function navigate to the edit screen to update the data
   void _navigateToEditScreen(BuildContext context) {
     Navigator.push(
       context,
@@ -73,6 +75,7 @@ class BlogDetailScreen extends StatelessWidget {
     );
   }
 
+// this function is used to share the details of the blog to other platforms
   void _shareBlog(BuildContext context, Blog blog) {
     final String text =
         'Check out this blog: \n\nTitle: ${blog.title}\n\nDescription: ${blog.description}\n\nPosted on: ${blog.date}\n\nAuthor: ${blog.author}\n\nTags: ${blog.description}';

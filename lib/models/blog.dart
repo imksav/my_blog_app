@@ -1,3 +1,4 @@
+// this is the class model for the database of the application
 class Blog {
   final int? id;
   final String title;
@@ -36,6 +37,7 @@ class Blog {
     );
   }
 
+// it is used to map the data along with the model attributes
   Map<String, dynamic> toMap() {
     return {
       'id': id,
@@ -48,6 +50,7 @@ class Blog {
     };
   }
 
+// it is used to assign the value to the model attributes from mapping
   factory Blog.fromMap(Map<String, dynamic> map) {
     return Blog(
       id: map['id'],

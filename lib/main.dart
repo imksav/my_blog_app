@@ -15,6 +15,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
+      // This will navigate to the homescreen which is the first screen of the application
       home: HomeScreen(),
     );
   }
